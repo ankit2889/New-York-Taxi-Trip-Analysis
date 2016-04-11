@@ -2,10 +2,10 @@
   * Created by spandanbrahmbhatt on 4/7/16.
   */
 
-import com.esri.core.geometry.Point
-import org.joda.time.DateTime
 import java.text.SimpleDateFormat
-import org.joda.time.Duration
+
+import com.esri.core.geometry.Point
+import org.joda.time.{DateTime, Duration}
 
 object TripAnalysis {
 

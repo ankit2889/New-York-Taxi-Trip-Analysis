@@ -12,7 +12,7 @@
  * the specific language governing permissions and limitations under the
  * License.
  */
-import com.esri.core.geometry.{GeometryEngine, SpatialReference, Geometry}
+import com.esri.core.geometry.{Geometry, GeometryEngine, SpatialReference}
 
 /**
  * A wrapper that provides convenience methods for using the spatial relations in the ESRI

@@ -4,36 +4,94 @@
 
 import java.text.SimpleDateFormat
 
-
-import com.esri.core.geometry.Point
-import org.apache.spark.{SparkContext, SparkConf}
-import org.apache.spark.SparkContext._
-import org.joda.time.{Duration, DateTime}
-import spray.json._
 import GeoJsonProtocol._
+import com.esri.core.geometry.Point
+import org.apache.spark.SparkConf
+import org.joda.time.{DateTime, Duration}
+import spray.json._
+import org.apache.spark.SparkContext
+
+
+import org.apache.spark.sql.SQLContext
+
+
+
 
 
 object Execute extends App {
 
+    val conf = new SparkConf().setAppName("Taxi trip analysis1").setMaster("local")
+    val sc = new SparkContext(conf)
+    val taxi = sc.textFile("trip_data_2000.csv").distinct()
 
-  case class Trip(pickupTime: DateTime, dropoffTime: DateTime, pickupLoc: Point, dropoffLoc: Point)
+    val format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-  val formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    def getDateTime(args:String):DateTime = {
+      new DateTime((format.parse(args)))
+    }
 
-  def parse(line: String): (String, Trip) = {
-    val fields = line.split(',')
-    val license = fields(1)
-    val pickupTime = new DateTime(formatter.parse(fields(5)))
-    val dropoffTime = new DateTime(formatter.parse(fields(6)))
-    val pickupLoc = point(fields(10), fields(11))
-    val dropoffLoc = point(fields(12), fields(13))
-    val trip = Trip(pickupTime, dropoffTime, pickupLoc, dropoffLoc)
-    (license, trip)
+
+
+  val taxiPair = taxi.map{t =>
+    val p = t.split(",")
+    ((p(0),getDateTime(p(5))),(p(0),p(1),p(2),p(5),p(3),p(6),p(7),p(8),p(9),p(10),p(11),p(12),p(13)))
   }
 
+
+
+  val fare = sc.textFile("trip_fare_2000.csv")
+
+
+  val farePair = fare.map{t =>
+    val p = t.split(",")
+    ((p(0),getDateTime(p(3))),(p(0),p(1),p(2),p(3),p(4),p(5),p(6),p(7),p(8),p(9),p(10)))
+  }
+  //
+
+
+  val inputJoinedData = taxiPair.join(farePair).values
+
+  println(inputJoinedData.count())
+  inputJoinedData.take(20).foreach(println)
+  val inputTaxiData = inputJoinedData.map{t =>
+    (t._1._1,t._1._2,t._1._3,t._1._4,t._1._5,
+      t._1._6,t._1._7,t._1._8,t._1._9,t._1._10,t._1._11,t._1._12,t._1._13,
+      t._2._5,t._2._6,t._2._7,t._2._8,t._2._9,t._2._10,t._2._11)
+  }
+//
+//  removeAll("inputTaxiData")
+//  removeAll("finalInputData")
+ // inputTaxiData.take(20).foreach(println)
+
+  case class Trip(pickupTime: DateTime, dropoffTime: DateTime, pickupLoc: Point, dropoffLoc: Point)
+  case class Fare(paymentType:String,fareAmount:Double,surcharge:Double,mta_tax:Double,tip_amount:Double,tolls_amount:Double,total_amount:Double)
+//
+ val formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//
+  def parse(line: String): (String, Trip,Fare) = {
+    val fields = line.split(',')
+    val license = fields(1)
+    val pickupTime = new DateTime(formatter.parse(fields(3)))
+    val dropoffTime = new DateTime(formatter.parse(fields(5)))
+    val pickupLoc = point(fields(9), fields(10))
+    val dropoffLoc = point(fields(11), fields(12))
+    val paymentType = fields(13)
+    val fareAmount = fields(14).toDouble
+    val surcharge = fields(15).toDouble
+    val mta_tax = fields(16).toDouble
+    val tip_amount = fields(17).toDouble
+    val tolls_amount = fields(18).toDouble
+    val total_amount = fields(19).replace(")","")toDouble
+    val trip = Trip(pickupTime, dropoffTime, pickupLoc, dropoffLoc)
+    val fare = Fare(paymentType,fareAmount,surcharge,mta_tax,tip_amount,tolls_amount,total_amount)
+    (license, trip,fare)
+  }
+//
   def point(longitude: String, latitude: String): Point = {
     new Point(longitude.toDouble, latitude.toDouble)
   }
+//
+//
 
 
   def safe[S, T](f: S => T): S => Either[T, (S, Exception)] = {
@@ -47,7 +105,7 @@ object Execute extends App {
       }
     }
   }
-
+//
   def hours(trip: Trip): Long = {
     val d = new Duration(
       trip.pickupTime,
@@ -55,44 +113,30 @@ object Execute extends App {
     d.getStandardHours
   }
 
-  val conf = new SparkConf().setAppName("Taxi trip analysis").setMaster("local")
-  val sc = new SparkContext(conf)
-  val taxi = sc.textFile("trip_data_1000.csv")
-  taxi.take(5).foreach(println)
-
 
   val safeParse = safe(parse)
-  val taxiParse = taxi.map(safeParse)
+
+  inputTaxiData.saveAsTextFile("inputTaxiData")
+  val joinedInput = sc.textFile("inputTaxiData/part-00000")
+
+  val taxiParse = joinedInput.map(parse)
+
+
+  println("taxi parse data")
+  taxiParse.take(10).foreach(println)
+
+
   taxiParse.cache()
 
-
-  taxiParse.map(_.isLeft).countByValue().foreach(println)
-
-
-
-  val taxiBad = taxiParse.collect({ case t if t.isRight => t.right.get
-  })
-
-
-  val taxiGood = taxiParse.collect({ case t if t.isLeft => t.left.get
-  })
-  taxiGood.cache()
-
-
-  taxiGood.values.map(hours).
-    countByValue().
-    toList.
-    sorted.
-    foreach(println)
-
-
-  val taxiClean = taxiGood.filter { case (lic, trip) => {
+//
+//
+  val taxiClean = taxiParse.filter { case (lic, trip,fare) => {
     val hrs = hours(trip)
     0 <= hrs && hrs < 3
   }
   }
-
-
+//
+//
   val inp = getClass.getResource("nyc-boroughs.geojson")
   val geoinp = scala.io.Source.fromURL(inp)
   val geojson = geoinp.mkString
@@ -118,8 +162,17 @@ object Execute extends App {
     })
   }
 
-  println("Before climax")
+  def boroughPickUp(trip: Trip): Option[String] = {
+    val feature: Option[Feature] = bFeatures.value.find(f => {
+      f.geometry.contains(trip.pickupLoc)
+    })
+    feature.map(f => {
+      f("borough").convertTo[String]
+    })
+  }
 
+
+//
   def getDay(arg:DateTime):String ={
     val day = arg.dayOfWeek().get()
     val stringDay = day match {
@@ -151,18 +204,35 @@ slotString
 
 
 
- // taxiClean.take(100).foreach(println)
 
-val taxiFinalData = taxiClean.map{ t => (t._1,t._2.pickupTime,getDay(t._2.dropoffTime),getSlot(t._2.pickupTime),t._2.dropoffTime,
+
+val taxiFinalData = taxiClean.map{ t => (t._1.replace("(",""),borough(t._2).getOrElse("No borough"),boroughPickUp(t._2).getOrElse("No borough"),getDay(t._2.dropoffTime),getSlot(t._2.pickupTime),t._2.dropoffTime,
   t._2.pickupLoc.getX,t._2.pickupLoc.getY,
-  t._2.dropoffLoc.getX,t._2.dropoffLoc.getY,borough(t._2).getOrElse("No borough"))}
-//taxiFinalData.take(800).foreach(println)
+  t._2.dropoffLoc.getX,t._2.dropoffLoc.getY,t._3.fareAmount,t._3.mta_tax,t._3.paymentType,t._3.surcharge,t._3.tip_amount,
+  t._3.tolls_amount,t._3.total_amount.toString.replace(")",""))}
 
-taxiFinalData.saveAsTextFile("sampleinput")
-//  taxiClean.values.
-//    map(borough).
-//    countByValue().
-//    foreach(println)
+
+
+
+  taxiFinalData.saveAsTextFile("finalInputData")
+
+  val sqlContext = new SQLContext(sc)
+  import sqlContext.implicits._
+
+
+  
+
+  val taxiDataFrame = taxiFinalData.toDF()
+
+  taxiDataFrame.show(5)
+  // to start with brownie points
+
+
+
+
+
+
+
 
 
 }
