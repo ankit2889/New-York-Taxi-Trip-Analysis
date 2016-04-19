@@ -3,7 +3,9 @@ import java.io.File
 /**
   * Created by spandanbrahmbhatt on 4/9/16.
   */
-class Utilities {
+object Utilities {
+
+
 
   def removeAll(path: String) = {
     def getRecursively(f: File): Seq[File] =
