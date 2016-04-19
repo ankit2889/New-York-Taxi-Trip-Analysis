@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat
 import GeoJsonProtocol._
 import com.esri.core.geometry.Point
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.types.DoubleType
 import org.joda.time.{DateTime, Duration}
 import spray.json._
 import org.apache.spark.SparkContext
@@ -16,7 +15,6 @@ import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LinearRegressionWithSGD
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.sql._
-import java.io._
 import org.apache.spark.sql.SQLContext
 
 
@@ -24,7 +22,8 @@ object Execute extends App {
 
     val conf = new SparkConf().setAppName("Taxi trip analysis1").setMaster("local")
     val sc = new SparkContext(new SparkConf().setAppName("Taxi trip analysis1").setMaster("local"))
-    val taxi = sc.textFile(args(0))
+    val taxi = sc.textFile("trip_6000.csv")
+    val taxiFiltered = taxi.filter(!_.contains("medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude"))
 
     val format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
@@ -35,18 +34,17 @@ object Execute extends App {
 
 
 
-  val taxiPair = taxi.map{t =>
-   // NotSerializable notSerializable = new NotSerializable();
+  val taxiPair = taxiFiltered.map{t =>
     val p = t.split(",")
     ((p(0),getDateTime(p(5))),(p(0),p(1),p(2),p(5),p(3),p(6),p(7),p(8),p(9),p(10),p(11),p(12),p(13)))
   }
 
 
 
-  val fare = sc.textFile(args(1))
+  val fare = sc.textFile("trip_fare_6000.csv")
+  val fareFiltered = fare.filter(!_.contains("medallion, hack_license, vendor_id, pickup_datetime, payment_type, fare_amount, surcharge, mta_tax, tip_amount, tolls_amount, total_amount"))
 
-
-  val farePair = fare.map{t =>
+  val farePair = fareFiltered.map{t =>
     val p = t.split(",")
     ((p(0),getDateTime(p(3))),(p(0),p(1),p(2),p(3),p(4),p(5),p(6),p(7),p(8),p(9),p(10)))
   }
@@ -127,8 +125,7 @@ object Execute extends App {
   val geojson = geoinp.mkString
   val features = geojson.parseJson.convertTo[FeatureCollection]
 
- // val p = new Point(-73.994499, 40.75066)
-  //val borough = features.find(f => f.geometry.contains(p))
+
 
   val areaSortedFeatures = features.sortBy(f => {
     val borough = f("boroughCode").convertTo[Int]
@@ -163,7 +160,7 @@ object Execute extends App {
       case "Queens" => 3
       case "Staten Island" => 4
       case "Bronx" => 5
-      case "No borough" => 6
+      case _ => 6
 
 
     }
@@ -232,14 +229,16 @@ slotString
     t._3.fareAmount,t._3.mta_tax,t._3.paymentType,t._3.surcharge,t._3.tip_amount,
     t._3.tolls_amount,t._3.total_amount.toString.replace(")",""))}
 
+  val taxiFilteredFinalData = taxiFinalData.filter(!_._3.equals(6))
 
 
-  taxiFinalData.saveAsTextFile("finalTaxiData")
+  taxiFilteredFinalData.saveAsTextFile("finalTaxiData")
 
   val sqlContext = new SQLContext(sc)
   import sqlContext.implicits._
 
-  val taxiDataFrame = taxiFinalData.toDF()
+
+  val taxiDataFrame = taxiFilteredFinalData.toDF()
   val taxiFinalDataFrame =  taxiDataFrame.withColumnRenamed("_1","hack_license").withColumnRenamed("_2","Medallion")
    .withColumnRenamed("_3","Pickup_borough").withColumnRenamed("_4","Dropoff_borough")
    .withColumnRenamed("_5","Pickup_Day").withColumnRenamed("_6","Pickup_slot")
@@ -307,6 +306,14 @@ slotString
   browniedf3.repartition(1).save("com.databricks.spark.csv", SaveMode.ErrorIfExists,Map("path" -> "scatterplotFareTimeBrownie","header"->"true"))
   browniedf3.show(20)
 
+  def convertTo100(arg:Double):Double = {
+    print(arg)
+    if(arg>100)
+      return 80.0
+    else
+      return arg
+  }
+
 
 
   browniedf3.registerTempTable("brownieFinalTable")
@@ -323,17 +330,16 @@ slotString
     "Pickup_slot,Pickup_latitude,Pickup_longitude,dropoff_latitude,dropoff_longitude,tripTime,tripDistance," +
     "totalAmount," +
     "(((PassengerDriverBrownie+ROUND(((((tripTime/"+MaxTime+")*100)*TimeBrownie)/300),2))+"
-    +"(ROUND(((((totalAmount/"+MaxFare+")*100)*FareBrownie)/300),2)))*2) as OverallBrowniePoint from finalTable")
+    +"(ROUND(((((totalAmount/"+MaxFare+")*100)*FareBrownie)/300),2)))*3) as OverallBrowniePoint from finalTable")
 
   h.repartition(1).save("com.databricks.spark.csv", SaveMode.ErrorIfExists,Map("path" -> "regressionInp","header"->"true"))
 
   val data = sc.textFile("regressionInp/part-00000")
   val filteredData = data.filter(!_.contains("Pickup_latitude"))
-  filteredData.first()
   val parsedData = filteredData.map { line =>
     val parts = line.split(',')
     LabeledPoint(parts(10).toDouble, Vectors.dense(parts(0).toDouble,parts(1).toDouble,parts(2).toDouble,
-      parts(3).toDouble,parts(4).toDouble,parts(5).toDouble,parts(6).toDouble,parts(7).toDouble,parts(8).toDouble,parts(9).toDouble))
+      parts(3).toDouble,parts(4).toDouble,parts(5).toDouble,parts(6).toDouble,parts(7).toDouble,parts(8).toDouble,convertTo100(parts(9).toDouble)))
   }.cache()
 
 
@@ -355,7 +361,8 @@ slotString
 
   // Save and load model
   model.save(sc, "myModelPath")
-  val sameModel = LinearRegressionModel.load(sc, "myModelPath")
+
+
 
 
 
