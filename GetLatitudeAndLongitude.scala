@@ -1,0 +1,50 @@
+///**
+//  * Created by spandanbrahmbhatt on 4/16/16.
+//  */
+//import java.net.URLEncoder
+//import play.api.libs.ws.{WS,WSResponse}
+//import akka.util.Timeout
+//import scala.concurrent.ExecutionContext.Implicits.global
+//import scala.concurrent.{ Await, Future }
+//import scala.concurrent.duration._
+//
+//import play.api._
+//import play.api.test.FakeApplication
+//
+////@implicitNotFound(msg = "You do not have an implicit Application in scope. If you want to bring the current running Application into context, please use dependency injection.")
+//object GetLatitudeAndLongitude{
+//
+//  /**
+//    * Fetch Latitude & Longitude
+//    */
+//  def fetchLatitudeAndLongitude(address: String): Option[(Double, Double)] = {
+//
+//
+//    //val application = new DefaultApplication(applicationPath, this.getClass.getClassLoader, None, Mode.Dev)
+//    //lazy val app = new DevApplication(new java.io.File("."))
+//    implicit val timeout = Timeout(50000 milliseconds)
+//    implicit lazy val app: FakeApplication = new FakeApplication()
+//    Play.start(app)
+//
+//    // Encoded the address in order to remove the spaces from the address (spaces will be replaced by '+')
+//    //@purpose There should be no spaces in the parameter values for a GET request
+//    val addressEncoded = URLEncoder.encode(address, "UTF-8")
+//    val jsonContainingLatitudeAndLongitude = WS.url("http://maps.googleapis.com/maps/api/geocode/json?address=" + addressEncoded + "&sensor=true").get()
+//
+//
+//    val future = jsonContainingLatitudeAndLongitude map {
+//      response => (response.json \\ "location")
+//    }
+//
+//    // Wait until the future completes (Specified the timeout above)
+//
+//    val result = Await.result(future, timeout.duration).asInstanceOf[List[play.api.libs.json.JsObject]]
+//
+//    //Fetch the values for Latitude & Longitude from the result of future
+//    val latitude = (result(0) \\ "lat")(0).toString.toDouble
+//    val longitude = (result(0) \\ "lng")(0).toString.toDouble
+//    Option(latitude, longitude)
+//  }
+//
+//
+//}
