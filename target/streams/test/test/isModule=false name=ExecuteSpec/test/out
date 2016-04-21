@@ -1,0 +1,6 @@
+[0m[[0minfo[0m] [0m[32mExecuteSpec:[0m[0m
+[0m[[0minfo[0m] [0m[32mExecute[0m[0m
+[0m[[0minfo[0m] [0m[32m- should correctly return the day[0m[0m
+[0m[[0minfo[0m] [0m[32m- should return correct day slot[0m[0m
+[0m[[0minfo[0m] [0m[32m- should return correct borough mapping[0m[0m
+[0m[[0minfo[0m] [0m[32m- should return 6 when incorrect borough is supplied[0m[0m

@@ -1,0 +1,5 @@
+New log file opened at Tue Apr 19 18:31:39 EDT 2016 by 23576@Spandans-MacBook-Air.local
+Sending msg to client play-fork-run-1786e3a8-de48-4a07-be7b-f521263bbb6f: DetachedLogEvent(LogMessage(debug,sbt server socket logs are in: /Users/spandanbrahmbhatt/play-scala/.sbtserver/connections/master.log))
+Sending msg to client play-fork-run-1786e3a8-de48-4a07-be7b-f521263bbb6f: DetachedLogEvent(LogMessage(debug,sbt client logs are in: /Users/spandanbrahmbhatt/play-scala/.sbtserver/connections/play-fork-run-1786e3a8-de48-4a07-be7b-f521263bbb6f.log))
+Sending msg to client play-fork-run-1786e3a8-de48-4a07-be7b-f521263bbb6f: DetachedLogEvent(LogMessage(debug,sbt general server logs are in: /Users/spandanbrahmbhatt/play-scala/.sbtserver/master.log))
+Reading next message from client.

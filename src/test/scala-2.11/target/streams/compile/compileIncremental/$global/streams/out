@@ -1,0 +1,130 @@
+[0m[[0mdebug[0m] [0m[naha] [0m
+[0m[[0mdebug[0m] [0m[naha] Initial source changes: [0m
+[0m[[0mdebug[0m] [0m[naha] 	removed:Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	added: Set(/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/ExecuteSpec.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/HaversineSpec.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] 	modified: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated products: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] External API changes: API Changes: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Modified binary dependencies: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Initial directly invalidated sources: Set(/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/ExecuteSpec.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/HaversineSpec.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] [0m
+[0m[[0mdebug[0m] [0m[naha] Sources indirectly invalidated by:[0m
+[0m[[0mdebug[0m] [0m[naha] 	product: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	binary dep: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	external source: Set()[0m
+[0m[[0mdebug[0m] [0mAll initially invalidated sources: Set(/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/ExecuteSpec.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala, /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/HaversineSpec.scala)[0m
+[0m[[0mdebug[0m] [0m[naha] Recompiling all 4 sources: invalidated sources (4) exceeded 50.0% of all sources[0m
+[0m[[0minfo[0m] [0mCompiling 4 Scala sources to /Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/target/scala-2.10/classes...[0m
+[0m[[0mdebug[0m] [0mGetting org.scala-sbt:compiler-interface:0.13.11:component from component compiler for Scala 2.10.6[0m
+[0m[[0mdebug[0m] [0mGetting org.scala-sbt:compiler-interface:0.13.11:component from component compiler for Scala 2.10.6[0m
+[0m[[0mdebug[0m] [0mRunning cached compiler 119dd06b, interfacing (CompilerInterface) with Scala compiler version 2.10.6[0m
+[0m[[0mdebug[0m] [0mCalling Scala compiler with arguments  (CompilerInterface):[0m
+[0m[[0mdebug[0m] [0m	-bootclasspath[0m
+[0m[[0mdebug[0m] [0m	/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/classes:/Users/spandanbrahmbhatt/.sbt/boot/scala-2.10.6/lib/scala-library.jar[0m
+[0m[[0mdebug[0m] [0m	-classpath[0m
+[0m[[0mdebug[0m] [0m	/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/target/scala-2.10/classes[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:15: object esri is not a member of package com[0m
+[0m[[31merror[0m] [0mimport com.esri.core.geometry.{Geometry, GeometryEngine}[0m
+[0m[[31merror[0m] [0m           ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:16: not found: object spray[0m
+[0m[[31merror[0m] [0mimport spray.json._[0m
+[0m[[31merror[0m] [0m       ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:18: not found: type JsValue[0m
+[0m[[31merror[0m] [0mcase class Feature(val id: Option[JsValue],[0m
+[0m[[31merror[0m] [0m                                  ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:19: not found: type JsValue[0m
+[0m[[31merror[0m] [0m    val properties: Map[String, JsValue],[0m
+[0m[[31merror[0m] [0m                                ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:20: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0m    val geometry: RichGeometry) {[0m
+[0m[[31merror[0m] [0m                  ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:32: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0m    extends IndexedSeq[RichGeometry] {[0m
+[0m[[31merror[0m] [0m                       ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:31: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0mcase class GeometryCollection(val geometries: Array[RichGeometry])[0m
+[0m[[31merror[0m] [0m                                                    ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:37: not found: type DefaultJsonProtocol[0m
+[0m[[31merror[0m] [0mobject GeoJsonProtocol extends DefaultJsonProtocol {[0m
+[0m[[31merror[0m] [0m                               ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:38: not found: type RootJsonFormat[0m
+[0m[[31merror[0m] [0m  implicit object RichGeometryJsonFormat extends RootJsonFormat[RichGeometry] {[0m
+[0m[[31merror[0m] [0m                                                 ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:40: not found: value GeometryEngine[0m
+[0m[[31merror[0m] [0m      GeometryEngine.geometryToGeoJson(g.csr, g.geometry).parseJson[0m
+[0m[[31merror[0m] [0m      ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:39: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0m    def write(g: RichGeometry) = {[0m
+[0m[[31merror[0m] [0m                 ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:43: not found: value GeometryEngine[0m
+[0m[[31merror[0m] [0m      val mg = GeometryEngine.geometryFromGeoJson(value.compactPrint, 0, Geometry.Type.Unknown)[0m
+[0m[[31merror[0m] [0m               ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:44: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0m      new RichGeometry(mg.getGeometry, mg.getSpatialReference)[0m
+[0m[[31merror[0m] [0m          ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:42: not found: type JsValue[0m
+[0m[[31merror[0m] [0m    def read(value: JsValue) = {[0m
+[0m[[31merror[0m] [0m                    ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:48: not found: type RootJsonFormat[0m
+[0m[[31merror[0m] [0m  implicit object FeatureJsonFormat extends RootJsonFormat[Feature] {[0m
+[0m[[31merror[0m] [0m                                            ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:51: not found: value JsString[0m
+[0m[[31merror[0m] [0m        "type" -> JsString("Feature"),[0m
+[0m[[31merror[0m] [0m                  ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:52: not found: value JsObject[0m
+[0m[[31merror[0m] [0m        "properties" -> JsObject(f.properties),[0m
+[0m[[31merror[0m] [0m                        ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:55: not found: value JsObject[0m
+[0m[[31merror[0m] [0m      JsObject(buf.toMap)[0m
+[0m[[31merror[0m] [0m      ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:58: not found: type JsValue[0m
+[0m[[31merror[0m] [0m    def read(value: JsValue) = {[0m
+[0m[[31merror[0m] [0m                    ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:62: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0m      val geometry = jso.fields("geometry").convertTo[RichGeometry][0m
+[0m[[31merror[0m] [0m                                                      ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:67: not found: type RootJsonFormat[0m
+[0m[[31merror[0m] [0m  implicit object FeatureCollectionJsonFormat extends RootJsonFormat[FeatureCollection] {[0m
+[0m[[31merror[0m] [0m                                                      ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:69: not found: value JsObject[0m
+[0m[[31merror[0m] [0m      JsObject([0m
+[0m[[31merror[0m] [0m      ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:75: not found: type JsValue[0m
+[0m[[31merror[0m] [0m    def read(value: JsValue) = {[0m
+[0m[[31merror[0m] [0m                    ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:80: not found: type RootJsonFormat[0m
+[0m[[31merror[0m] [0m  implicit object GeometryCollectionJsonFormat extends RootJsonFormat[GeometryCollection] {[0m
+[0m[[31merror[0m] [0m                                                       ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:82: not found: value JsObject[0m
+[0m[[31merror[0m] [0m      JsObject([0m
+[0m[[31merror[0m] [0m      ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:87: not found: type JsValue[0m
+[0m[[31merror[0m] [0m    def read(value: JsValue) = {[0m
+[0m[[31merror[0m] [0m                    ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJson.scala:88: not found: type RichGeometry[0m
+[0m[[31merror[0m] [0m      GeometryCollection(value.asJsObject.fields("geometries").convertTo[Array[RichGeometry]])[0m
+[0m[[31merror[0m] [0m                                                                               ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:16: object esri is not a member of package com[0m
+[0m[[31merror[0m] [0mimport com.esri.core.geometry.Point[0m
+[0m[[31merror[0m] [0m           ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:17: object scalatest is not a member of package org[0m
+[0m[[31merror[0m] [0mimport org.scalatest.{FlatSpec, Matchers}[0m
+[0m[[31merror[0m] [0m           ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:18: not found: object spray[0m
+[0m[[31merror[0m] [0mimport spray.json._[0m
+[0m[[31merror[0m] [0m       ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:20: not found: type FlatSpec[0m
+[0m[[31merror[0m] [0mclass GeoJsonSpec extends FlatSpec with Matchers {[0m
+[0m[[31merror[0m] [0m                          ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:20: not found: type Matchers[0m
+[0m[[31merror[0m] [0mclass GeoJsonSpec extends FlatSpec with Matchers {[0m
+[0m[[31merror[0m] [0m                                        ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:23: value should is not a member of String[0m
+[0m[[31merror[0m] [0m  "GeoJson" should "correctly parse th NYC boroughs into usable RichGeometry objects" in {[0m
+[0m[[31merror[0m] [0m            ^[0m
+[0m[[31merror[0m] [0m/Users/spandanbrahmbhatt/IdeaProjects/text/src/test/scala-2.11/GeoJsonSpec.scala:30: value should is not a member of String[0m
+[0m[[31merror[0m] [0m  "GeoJson" should "parse GeoJSON into objects and back again" in {[0m
+[0m[[31merror[0m] [0m            ^[0m
+[0m[[31merror[0m] [0m34 errors found[0m
+[0m[[0mdebug[0m] [0mCompilation failed (CompilerInterface)[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) Compilation failed[0m

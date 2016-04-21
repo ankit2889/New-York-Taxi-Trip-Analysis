@@ -1,0 +1,5 @@
+[0m[[0minfo[0m] [0m[32mGeoJsonSpec:[0m[0m
+[0m[[0minfo[0m] [0m[32mGeoJson[0m[0m
+[0m[[0minfo[0m] [0m[32m- should correctly parse th NYC boroughs into usable RichGeometry objects[0m[0m
+[0m[[0minfo[0m] [0m[32m- should correctly parse the non NYC boroughs into usable RichGeometry objects[0m[0m
+[0m[[0minfo[0m] [0m[32m- should parse GeoJSON into objects and back again[0m[0m
